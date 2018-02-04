@@ -24,5 +24,6 @@ gdalbuildvrt geoid.vrt n45w180/n45w180/w001001.adf n45w135/n45w135/w001001.adf  
 ##gdal_translate geoid.vrt geoid15.tif -outsize 15% 15% -co COMPRESS=LZW -co TILED=YES
 
 xfile <- system.file("extdata", "geoid15.tif", package = "potato")
-potato_raster <- raster::raster(xfile)
+potato_raster <- readAll(raster::raster(xfile))
+
 usethis::use_data(potato_raster)
