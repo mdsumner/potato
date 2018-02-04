@@ -1,0 +1,38 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# potato
+
+The goal of potato is to provide easy access to a geoid model in R.
+
+## Example
+
+This is a basic example which shows you how to load and plot the *potato*. 
+
+```{r example}
+library(potato)
+library(raster)
+plot(potato_raster, col = viridis::viridis(64))
+
+
+library(anglr)
+
+globe_potato <- globe(anglr(aggregate(potato_raster, fact = 32)))
+
+#rgl::rgl.clear()
+#plot(globe_potato)
+#rgl::rglwidget()
+```
