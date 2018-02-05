@@ -23,9 +23,15 @@ plot(potato_raster, col = viridis::viridis(64))
 
 library(anglr)
 
-globe_potato <- globe(anglr(aggregate(potato_raster, fact = 32)))
+potato <- anglr(aggregate(potato_raster, fact = 6))
+## we can exaggerate the relief, or just reduce the radius
+##globe_potato <- globe(potato, gproj = "+proj=geocent +a=637")
 
-#rgl::rgl.clear()
-#plot(globe_potato)
-#rgl::rglwidget()
+## forget the globe for now until I can figure it out again
+rgl::rgl.clear()
+plot(potato)
+rgl::aspect3d(1, 1, 0.5)
+rgl::rglwidget()
 ```
+
+![](README-example-2.png)
