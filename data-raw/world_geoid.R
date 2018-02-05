@@ -25,5 +25,5 @@ gdalbuildvrt geoid.vrt n45w180/n45w180/w001001.adf n45w135/n45w135/w001001.adf  
 
 xfile <- system.file("extdata", "geoid15.tif", package = "potato")
 potato_raster <- readAll(raster::raster(xfile))
-
-usethis::use_data(potato_raster)
+extent(potato_raster) <- extent(-180, 180, -90, 90)
+usethis::use_data(potato_raster, overwrite = TRUE)
