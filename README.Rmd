@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 # potato
 
-The goal of potato is to provide easy access to a geoid model in R.
+The goal of potato is to provide easy access to a geoid model in R.  Nothing serious yet. 
 
 ## Example
 
@@ -28,6 +28,9 @@ This is a basic example which shows you how to load and plot the *potato*.
 library(potato)
 library(raster)
 library(reproj)
+library(rgl)
+
+
 plot(potato_raster, col = viridis::viridis(64))
 
 #remotes::install_github(c("hypertidy/ceramic", "hypertidy/quadmesh"))
