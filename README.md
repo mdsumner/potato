@@ -7,12 +7,14 @@ The goal of potato is to provide easy access to a geoid model in R.
 Example
 -------
 
-This is a basic example which shows you how to load and plot the *potato*.
+This is a basic example which shows you how to load and plot the
+*potato*.
 
 ``` r
 library(potato)
 library(raster)
 #> Loading required package: sp
+library(reproj)
 plot(potato_raster, col = viridis::viridis(64))
 ```
 
@@ -20,18 +22,21 @@ plot(potato_raster, col = viridis::viridis(64))
 
 ``` r
 
-
-library(anglr)
-
-potato <- anglr(aggregate(potato_raster, fact = 6))
+#remotes::install_github(c("hypertidy/ceramic", "hypertidy/quadmesh"))
+im <- ceramic::cc_location(cbind(0, 0), buffer = 6378137 * pi)
+potato <- quadmesh::quadmesh(aggregate(potato_raster, fact = 6), texture = im)
+#> writing texture image to /mnt/tmp/RtmpgHPj03/file7f902cc84659.png
 ## we can exaggerate the relief, or just reduce the radius
-##globe_potato <- globe(potato, gproj = "+proj=geocent +a=637")
+potato <- reproj::reproj(potato, target = "+proj=geocent +a=637")
 
-## forget the globe for now until I can figure it out again
 rgl::rgl.clear()
-plot(potato)
-rgl::aspect3d(1, 1, 0.5)
+#> Warning in rgl.init(initValue, onlyNULL): RGL: unable to open X11 display
+#> Warning: 'rgl_init' failed, running with rgl.useNULL = TRUE
+rgl::shade3d(potato, col = "white")
+rgl::aspect3d(1, 1, 1)
 rgl::rglwidget()
 ```
 
 ![](README-example-2.png)
+
+![alt text](man/figures/potato.png "Title")

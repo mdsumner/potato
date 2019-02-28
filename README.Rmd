@@ -27,18 +27,22 @@ This is a basic example which shows you how to load and plot the *potato*.
 ```{r example}
 library(potato)
 library(raster)
+library(reproj)
 plot(potato_raster, col = viridis::viridis(64))
 
-
-library(anglr)
-
-potato <- anglr(aggregate(potato_raster, fact = 6))
+#remotes::install_github(c("hypertidy/ceramic", "hypertidy/quadmesh"))
+im <- ceramic::cc_location(cbind(0, 0), buffer = 6378137 * pi)
+potato <- quadmesh::quadmesh(aggregate(potato_raster, fact = 6), texture = im)
 ## we can exaggerate the relief, or just reduce the radius
-##globe_potato <- globe(potato, gproj = "+proj=geocent +a=637")
+potato <- reproj::reproj(potato, target = "+proj=geocent +a=637")
 
-## forget the globe for now until I can figure it out again
 rgl::rgl.clear()
-plot(potato)
-rgl::aspect3d(1, 1, 0.5)
+rgl::shade3d(potato, col = "white")
+rgl::aspect3d(1, 1, 1)
 rgl::rglwidget()
 ```
+
+![alt text][potato]
+
+
+[potato]: man/figures/potato.png "Title"
